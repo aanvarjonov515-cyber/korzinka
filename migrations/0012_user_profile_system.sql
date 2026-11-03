@@ -1,0 +1,31 @@
+-- ==============================================================================
+-- PROFITLEAK SECTION 12: USER PROFILE, AVATAR, LOCATION & IDENTITY REBUILD
+-- Migration: 0012_user_profile_system.sql
+-- ==============================================================================
+
+ALTER TABLE users ADD COLUMN IF NOT EXISTS first_name VARCHAR(64);
+ALTER TABLE users ADD COLUMN IF NOT EXISTS last_name VARCHAR(64);
+ALTER TABLE users ADD COLUMN IF NOT EXISTS middle_name VARCHAR(64);
+ALTER TABLE users ADD COLUMN IF NOT EXISTS display_name VARCHAR(128);
+ALTER TABLE users ADD COLUMN IF NOT EXISTS avatar_reference VARCHAR(512);
+ALTER TABLE users ADD COLUMN IF NOT EXISTS phone VARCHAR(32);
+ALTER TABLE users ADD COLUMN IF NOT EXISTS secondary_phone VARCHAR(32);
+ALTER TABLE users ADD COLUMN IF NOT EXISTS email_verified_at TIMESTAMP WITH TIME ZONE;
+ALTER TABLE users ADD COLUMN IF NOT EXISTS phone_verified_at TIMESTAMP WITH TIME ZONE;
+ALTER TABLE users ADD COLUMN IF NOT EXISTS country VARCHAR(64) DEFAULT 'O''zbekiston';
+ALTER TABLE users ADD COLUMN IF NOT EXISTS region VARCHAR(128) DEFAULT 'Toshkent';
+ALTER TABLE users ADD COLUMN IF NOT EXISTS city VARCHAR(128) DEFAULT 'Toshkent shahri';
+ALTER TABLE users ADD COLUMN IF NOT EXISTS address VARCHAR(256);
+ALTER TABLE users ADD COLUMN IF NOT EXISTS preferred_language VARCHAR(5) DEFAULT 'uz';
+ALTER TABLE users ADD COLUMN IF NOT EXISTS timezone VARCHAR(64) DEFAULT 'Asia/Tashkent';
+ALTER TABLE users ADD COLUMN IF NOT EXISTS job_title VARCHAR(128);
+ALTER TABLE users ADD COLUMN IF NOT EXISTS department VARCHAR(128);
+ALTER TABLE users ADD COLUMN IF NOT EXISTS bio VARCHAR(1024);
+ALTER TABLE users ADD COLUMN IF NOT EXISTS role VARCHAR(64) DEFAULT 'Bosh Direktor (Owner)';
+ALTER TABLE users ADD COLUMN IF NOT EXISTS business_id UUID;
+ALTER TABLE users ADD COLUMN IF NOT EXISTS branch_id UUID;
+ALTER TABLE users ADD COLUMN IF NOT EXISTS account_status VARCHAR(32) DEFAULT 'ACTIVE';
+
+CREATE INDEX IF NOT EXISTS idx_users_email ON users(email);
+CREATE INDEX IF NOT EXISTS idx_users_phone ON users(phone);
+CREATE INDEX IF NOT EXISTS idx_users_business ON users(business_id);
